@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Application</title>
+</head>
+<body>
+    <%= include('../partials/_navbar.ejs') %>
+    <h1>Add a New Job</h1>
+
+    <form action="/jobs/create-job" method="POST">
+
+        <label for="title">Job Title:</label>
+        <input type="text" name="title" id="title" required/>
+
+        <label for="description">Job Description:</label>
+        <textarea name="description" required></textarea>
+
+        <button type="submit">Create App</button>
+    </form>
+</body>
+</html>

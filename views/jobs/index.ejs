@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications</title>
+</head>
+<body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Job Applications</h1>
+    <a href="/jobs/new">Create a New Job</a>
+    <ul>
+        <% jobs.forEach(job => { %>
+          <li>
+            <strong><%= job.title %></strong> - <%= job.status %>
+            <a href="/jobs/<%= job._id %>">View</a>
+            <a href="/jobs/<%= job._id %>/edit">Edit</a>
+            <form method="POST" action="/jobs/<%= job._id %>?_method=DELETE">
+                <button type="submit">Delete</button>
+            </form>
+            <% if (job.workerAssigned) { %>
+              <p>Assigned Worker: <%= job.workerAssigned.name %></p>
+              <p>Rating: <%= job.workerAssigned.averageRating %></p>
+            <% } %>
+          </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
