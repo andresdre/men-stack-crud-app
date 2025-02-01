@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>New Application</title>
 </head>
 <body>
-    <%= include('../partials/_navbar.ejs') %>
+    <%- include('../partials/_navbar.ejs') %>
+    
     <h1>Add a New Job</h1>
-
+    <div class="new body"><
     <form action="/jobs/create-job" method="POST">
 
         <label for="title">Job Title:</label>
@@ -17,7 +19,8 @@
         <label for="description">Job Description:</label>
         <textarea name="description" required></textarea>
 
-        <button type="submit">Create App</button>
+        <button type="submit">Create Job</button>
     </form>
+    </div>
 </body>
 </html>

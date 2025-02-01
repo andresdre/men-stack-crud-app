@@ -67,23 +67,6 @@ router.post('/apply-job/:jobId', async (req, res) => {
 });
 
 
-router.put('/:jobId', async function(req, res) {
-    try {
-        const currentUser = await User.findById(req.session.user._id)
-        const job = currentUser.jobs.id(req.params.jobId)
-
-        job.set(req.body)
-
-        await currentUser.save()
-
-        res.redirect(`/users/${currentUser._id}/jobs/${job._id}`);
-
-    } catch(err) {
-        console.log(err)
-        res.send("Error updating application, check terminal")
-    }
-})
-
 router. get('/:jobId/edit', async function(req, res) {
     try{
         const job = await Job.findById(req.params.jobId);
@@ -138,21 +121,17 @@ router.post('/rate-worker/:workerId', async (req, res) => {
 
 router.delete('/:jobId', async function(req, res) {
     try {
-    const currentUser = await User.findById(req.session.user._id);
-    currentUser.jobs.id(req.params.jobId).deleteOne();
-    await currentUser.save();
-
-    res.redirect(`/users/${currentUser._id}$/jobs`)
-} catch(err) {
-        console.log(err)
-        res.send('Error deleting application')
+        await Job.findByIdAndDelete(req.params.jobId);
+        res.redirect("/jobs");
+    } catch(err) {
+        console.log(err);
+        res.send('Error deleting application');
     }
 });
 
 
 router.get('/:jobId', async function(req, res) {
     console.log(req.session)
-//    if (req.session.user.role === 'contractor') {
         try {
             const job = await Job.findById(req.params.jobId);
             console.log(job);
@@ -161,31 +140,6 @@ router.get('/:jobId', async function(req, res) {
             console.log(err)
             res.send('Error and show page')
         }
-  //  } else {
-    //     try {
-    //         res.render('jobs/show.ejs');
-    //     } catch(err) {
-    //         console.log(err)
-    //         res.send('Error and show page')
-    //     }
-    // }
-    
 });
-
-
-// router.post("/", async function (req, res) {
-//     try {
-//         const currentUser = await User.findById(req.session.user._id);
-//         currentUser.jobs.push(req.body);
-
-//         await currentUser.save();
-//         console.log(currentUser, "<- currentUser");
-
-//         res.redirect(`/users/${currentUser._id}$/jobs`);
-//     } catch(err) {
-//         console.log(err);
-//         res.send("Error check the terminal for debug");
-//     }
-// });
 
 module.exports = router;

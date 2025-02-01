@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Editing <%= job.title %></title>
 </head>
 <body>
     <%- include('../partials/_navbar.ejs') %>
+    <div class="edit body">
     <h1>Edit <%= job.title %> at <%= job.company %></h1>
-    <form 
-    action="/users/<%= user._id %>/jobs/<%= job._id %>?_method=PUT"
-    method="POST">
+    
+    <form action="/jobs/<%= job._id %>?_method=PUT" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" value="<%= job.title %>">
-    <label for="notes">Notes:</label>
-    <textarea name="notes" id="notes"><%= job.notes %></textarea>
+    <label for="notes">Description:</label>
+    <textarea name="description" id="notes"><%= job.description %></textarea>
     
     <button type="submit">Update Job</button>
 </form>
+    </div>
 </body>
 </html>
