@@ -29,11 +29,14 @@ router.post('/create-job', async(req, res) => {
         }
 
         const contractorId = req.session.user._id;
-        const { title, description } = req.body;
+        console.log("Contractor ID:", contractorId);
+
+        const { title, description, company } = req.body;
 
         const newJob = new Job({
             title,
             description,
+            company,
             contractor: contractorId
         });
 
@@ -42,6 +45,17 @@ router.post('/create-job', async(req, res) => {
     } catch(err) {
         console.log(err);
         res.status(500).send('Error creating the job');
+    }
+});
+
+
+router.get('/all-jobs', async (req, res) => {
+    try {
+        const jobs = await Job.find({});
+        res.json(jobs);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error fetching jobs');
     }
 });
 
@@ -72,8 +86,8 @@ router. get('/:jobId/edit', async function(req, res) {
         const job = await Job.findById(req.params.jobId);
         res.render('jobs/edit.ejs', { job: job });
     } catch(err) {
-        console.log(err)
-        res.send('Error getting edit form')
+        console.log(err);
+        res.send('Error getting edit form');
     }
 });
 
@@ -82,7 +96,7 @@ router.put('/:jobId', async function(req, res){
     console.log(req.body);
     const job = await Job.findByIdAndUpdate(req.params.jobId, req.body, { new: true });
     console.log(job);
-    res.redirect(`/jobs/${req.params.jobId}`);
+    res.redirect('/jobs');
 });
 
 

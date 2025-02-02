@@ -10,11 +10,14 @@
     <%- include('../partials/_navbar.ejs') %>
     
     <h1>Add a New Job</h1>
-    <div class="new body"><
+    <div class="new body">
     <form action="/jobs/create-job" method="POST">
 
         <label for="title">Job Title:</label>
         <input type="text" name="title" id="title" required/>
+
+        <label for="company">Company:</label>
+        <input type="text" name="company" id="comapny" required />
 
         <label for="description">Job Description:</label>
         <textarea name="description" required></textarea>
