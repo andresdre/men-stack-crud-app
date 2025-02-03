@@ -39,6 +39,7 @@ router.post('/sign-up', async (req, res) => {
       _id: userCreated._id,
       role: userCreated.role
     }
+    console.log(req.session.user);
 
     res.redirect('/');
   } catch (error) {
@@ -51,6 +52,7 @@ router.post('/sign-up', async (req, res) => {
 router.post('/sign-in', async (req, res) => {
   try {
     const userInDatabase = await User.findOne({ username: req.body.username });
+    console.log(userInDatabase);
     if (!userInDatabase) {
         console.log("User not found");
       return res.send('Login failed. Please try again.');

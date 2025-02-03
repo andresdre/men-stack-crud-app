@@ -30,18 +30,23 @@ router.post('/create-job', async(req, res) => {
 
         const contractorId = req.session.user._id;
         console.log("Contractor ID:", contractorId);
+        console.log(req.body);
 
         const { title, description, company } = req.body;
 
-        const newJob = new Job({
+        const newJob = {
             title,
             description,
             company,
-            contractor: contractorId
-        });
+            contractor: contractorId,            
+            status: 'open',
+            rating: 0
+        };
+        console.log(newJob);
 
-        await newJob.save();
-        res.redirect('/jobs');
+        const saveJob = await Job.create(newJob);
+        console.log(saveJob);
+        res.redirect(`/users/${contractorId}/jobs`);
     } catch(err) {
         console.log(err);
         res.status(500).send('Error creating the job');
@@ -52,6 +57,18 @@ router.post('/create-job', async(req, res) => {
 router.get('/all-jobs', async (req, res) => {
     try {
         const jobs = await Job.find({});
+        res.json(jobs);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error fetching jobs');
+    }
+});
+
+
+router.get('/jobs', async (req, res) => {
+    try {
+        const jobs = await Job.find({});
+        console.log(jobs);
         res.json(jobs);
     } catch (err) {
         console.log(err);

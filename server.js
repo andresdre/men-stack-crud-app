@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 
 const authController = require("./controllers/auth.js");
 const jobCtrl = require("./controllers/jobs.js");
+const userController = require("./controllers/users.js");
 
 
 const isSignedIn = require("./middleware/is-signed-in.js");
@@ -50,6 +51,7 @@ app.get("/", (req, res) => {
     console.log(req.session, "<- req.session");
 
     if (req.session.user) {
+        console.log(req.session);
         res.redirect(`/users/${req.session.user._id}/jobs`);
     } else {
         res.render("index.ejs");
@@ -58,7 +60,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/auth", authController);
-
+app.use("/users", userController);
 app.use(isSignedIn)
 app.use("/jobs", jobCtrl);
 
